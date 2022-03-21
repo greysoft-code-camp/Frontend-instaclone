@@ -9,7 +9,6 @@
       <q-file v-else outlined @input="captureImageFallback" v-model="imageUpload" label="choose an image" accept="image/>">
          <template v-slot:prepend>
            <q-icon name="add"/>
-
          </template>
       </q-file>
         <div class="row justify-center q-ma-md">
@@ -25,7 +24,9 @@
         </div>
         <div class="row justify-center q-mt-lg">
           <q-btn color="primary"
-          label="Post Image" rounded unelevated/>
+          label="Post Image" rounded unelevated
+          @click="submitImage"
+          />
         </div>
     </div>
 
@@ -35,9 +36,9 @@
 </template>
 
 <script>
-import { uid } from 'quasar'
-require ('md-gum-polyfill')
-
+import { uid } from 'quasar';
+require ('md-gum-polyfill');
+import axios from 'axios';
 
 export default {
   name: 'PageCamera',
@@ -73,7 +74,9 @@ export default {
       let context  = canvas.getContext('2d')
       context.drawImage(video, 0, 0, canvas.width, canvas.height)
       this.imageCaptured = true
-      this.post.photo = this.dataURItoBlob(canvas.toDataURL())
+      // this.post.photo = canvas.toDataURL();
+      this.post.photo = this.dataURItoBlob(canvas.toDataURL());
+      this.disableCamera();
     },
     captureImageFallback(file){
        this.post.photo = file
@@ -89,21 +92,47 @@ export default {
        }
        render.readAsDataURL (e.target.files[0])
     },
-    dataURItoBlob(dataURI){
+    disableCamera(){
+      this.$refs.video.srcObject.getVideoTracks().forEach(track => {
+        track.stop();
+      })
+    },
+    dataURItoBlob(dataURI){  
      var byteString= atob(dataURI.split(',')[1]);
 
      var mineString = dataURI.split(',')[0].split(':')[1].split(';')[0]
 
-     var ab = new ArrayBUffer(byteString.length);
+     var ab = new ArrayBuffer(byteString.length);
 
      var ia = new Uint8Array(ab);
 
      for (var i= 0; i < byteString.length; i++){
        ia[i] = byteString.charCodeAt(i);
      }
-     var blob = new Blob([ab], {type:nineString});
+     var blob = new Blob([ab], {type:mineString});
     //  localStorage.setItem('capturedImage', blob)
      return blob;
+    },
+    submitImage(){
+      // console.log(this.post);
+      let formData = new FormData();
+      formData.append('id', this.post.id);
+      formData.append('caption', this.post.caption);
+      formData.append('location', this.post.location);
+      formData.append('photo', this.post.photo, `${Math.floor(Math.random() * 100000)}_${Math.floor(Math.random() * 100000)}_${Math.floor(Math.random() * 100000)}.${this.post.photo.type.split('/')[1]}`);
+      formData.append('date', this.post.date);
+      console.log(formData.get('photo'));
+      axios({
+          url: 'http://192.168.1.168:8080/api/post',
+          method: 'POST',
+          data: formData
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      })
     }
   },
   mounted(){
