@@ -11,13 +11,8 @@
             <q-icon  name="search" class="search-icon" />
           </div>
         </div>
-
-
-
-
-
         <div class="driven">
-          <q-icon clickable class="cursor-pointer" to="/page" :key="size" :size="size" name="camera" style="font-size: 2em"/>
+          <q-icon clickable class="cursor-pointer" @click="this.$router.push('/page')" name="camera" style="font-size: 2em"/>
            <q-icon name="person" class="profile profile-pic cursor-pointer" />
         </div>
 

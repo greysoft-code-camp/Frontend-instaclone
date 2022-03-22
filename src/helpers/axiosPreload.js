@@ -1,5 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = "https://www.randomuser.me/api";
+const randomUserbaseUrl = "https://www.randomuser.me/api";
+const laravelApi = "";
 
-export default url => axios(`${baseUrl + url}`)
+export default (url, _live) => axios(`${(_live? laravelApi : randomUserbaseUrl) + url}`)
