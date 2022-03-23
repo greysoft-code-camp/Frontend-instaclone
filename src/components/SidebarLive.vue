@@ -56,7 +56,7 @@ export default {
         width: 20%;
         position: fixed;
         top: 110px;
-        right: 15.7%;
+        right: 12%;
         height: 100vh;
         padding: 0.5%;
         z-index: 1000;

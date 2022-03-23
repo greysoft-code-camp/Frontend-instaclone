@@ -2,12 +2,13 @@
   <q-layout view="lHh Lpr lFf">
     <q-header
      class="bg-white text-grey-10"
-     bordered >
-      <q-toolbar class="" style="width: 95%; margin: 0 auto">
+     bordered
+     >
+      <q-toolbar class="constrain">
         <q-btn
-          to="/page"
-          class="large-screen-only"
-          icon="camera"
+          to="/camera"
+          class="large-screen-only q-mr-sm"
+          icon="eva-camera-outline"
           size="18px"
           flat
           round
@@ -17,17 +18,13 @@
                vertical
                spaced  />
         <q-toolbar-title
-        class="text-grand-hotel text-center text-bold">
+        class="text-grand-hotel text-bold">
           Quasargram
         </q-toolbar-title>
-        <q-separator
-               class="large-screen-only"
-               vertical
-               spaced  />
          <q-btn
           to="/"
           class="large-screen-only"
-          icon="home"
+          icon="eva-home-outline"
           size="18px"
           flat
           round
@@ -44,10 +41,10 @@
       >
         <q-route-tab
         to="/"
-        icon="home" />
+        icon="eva-home-outline" />
         <q-route-tab
-        to="/page"
-        icon="camera"/>
+        to="/camera"
+        icon="eva-camera-outline"/>
 
       </q-tabs>
       </q-footer>

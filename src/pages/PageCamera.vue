@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { uid } from 'quasar';
+import { Notify } from 'quasar';
 require ('md-gum-polyfill');
 import axios from 'axios';
 
@@ -70,8 +70,8 @@ export default {
       let context  = canvas.getContext('2d')
       context.drawImage(video, 0, 0, canvas.width, canvas.height)
       this.imageCaptured = true
-      // this.post.photo = canvas.toDataURL();
-      this.post.photo = this.dataURItoBlob(canvas.toDataURL());
+      this.post.photo = canvas.toDataURL();
+      // this.post.photo = this.dataURItoBlob(canvas.toDataURL());
       this.disableCamera();
     },
     captureImageFallback(file){
@@ -133,8 +133,9 @@ export default {
       }, { timeout: 7000 })
     },
     submitImage(){
+      this.$q.loading.show()
       console.log(this.post);
-      if(this.post.photo){
+      if(this.post.photo !== null && this.post.caption !== "" && this.post.location !== ""){
         let formData = new FormData();
 
         formData.append('caption', this.post.caption);
@@ -143,19 +144,32 @@ export default {
 
         axios({
             method: 'POST',
-            url: 'https://greystagram.greysoft.com.ng/api/posts',
-            data: formData,
-            headers: {
-              // 'Content-Length': this.post.photo.length,
-              'Content-Type': 'multipart/form-data'
-            }
+            url: 'https://greystagram.greysoft.com.ng/api/post',
+            data: formData
         })
         .then(response => {
           console.log(response);
+          Notify.create({
+            message: "Post created",
+            color: "green"
+          })
+          this.$router.push('/');
+          this.$q.loading.hide()
         })
         .catch(err => {
           console.log(err);
+          Notify.create({
+            message: "Error creating post",
+            color: "red"
+          })
+          this.$q.loading.hide()
         })
+      }else{
+        Notify.create({
+          message: "Finish filling the form before submitting.",
+          color: "red"
+        })
+        this.$q.loading.hide()
       }
     }
   },

@@ -68,13 +68,15 @@ export default {
 
 
     .main{
-        width: 20%;
+        width: 30%;
         position: fixed;
         top: 110px;
-        right: 15.7%;
+        right: 13%;
         height: 100vh;
         padding: 0.5%;
         z-index: 1000;
+        margin-left:30rem !important;
+
     }
 
     .side-profile{

@@ -2,7 +2,7 @@
   <q-page >
     <div class="row">
       <div class="col-md-8">
-        <Navbar />
+        <!--<Navbar />-->
         <!-- <Stories
           :userStories="userStories"
         /> -->
@@ -59,8 +59,8 @@ export default defineComponent({
     fetchImages(){
       axios.get('https://greystagram.greysoft.com.ng/public/api')
       .then(({data})=> {
-        this.posts = data;
-        console.log(data);
+        this.posts = data.posts;
+        console.log(data.posts);
       })
       .catch(err => {
         console.log(err);

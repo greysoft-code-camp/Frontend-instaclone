@@ -11,23 +11,91 @@
                     </q-btn>
                 </div>
                 <div class="col-11 side-to-avatar">
-                    <div class = ''>
+                    <div class = 'sanni'>
                         <div class="handle text-bold">sanni_emmanuel</div>
-                        <div class="under-handle">Kaduna, Nigeria.</div>
+                        <div class="under-handle">{{this.post.location}}</div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Post Image -->
         <div class="post-image">
-            <img :src="this.post.photo" class = "post-image" />
+            <img @dblclick="likePost" :src="`http://greystagram.greysoft.com.ng/storage/${this.post.photo}`" class = "post-image" />
+
+            <div class="like-big">
+              <q-icon v-show="this.showHeart" id="first" color="white" class = "big-boys" name ="favorite" />
+            </div>
         </div>
         <!-- Post Footer -->
         <div class="post-footer">
+            <div class="bad">
+                <div class="bad">
+                    <div class="badguy">
+                        <q-icon @click = "likePost" v-show="!this.postLiked" id="first" color="black" class = "post-icons " name ="favorite_outline" />
+                        <q-icon @click = "likePost" v-show="this.postLiked" id="second" color="red" class = "post-icons  red-like" name ="favorite" />
+                    </div>
+                    <q-icon color = "black" class = "post-icons q-ml-sm" name="chat_bubble_outline" @click = "this.showDialog = true"/>
+                </div>
+                <div class="col-4 text-end move-end">
+                    <q-icon color = "black" class = "post-icons" name="bookmark_outline" />
+                </div>
+            </div>
+            <div class="row stupid">
+                <b> {{likes}} likes </b>
+            </div>
             <div class="row">
-                <div class="handle text-siz view-commentse"><b>sanni_emmanuel</b> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita, recusandae consectetur voluptate pariatur similique voluptas quasi sit labore quisquam neque!</div>
+                <div class="handle text-siz view-commentse"><b>sanni_emmanuel</b> {{ this.post.caption }}</div>
             </div>
         </div>
+        <!-- Post Dialog -->
+        <q-dialog v-model="showDialog">
+            <q-card class = "dialog-card">
+                <q-card-section class="card-sec">
+                    <div class="row card-sec-child">
+                        <div class="dialog-user">
+                            <div class="row">
+                                <div class="col-1">
+                                    <q-btn round>
+                                        <q-avatar size = "40px">
+                                            <img src = "https://cdn.quasar.dev/img/boy-avatar.png" />
+                                        </q-avatar>
+                                    </q-btn>
+                                </div>
+                                <div class="col-11 side-to-avatar">
+                                    <div class = 'q-ml-lg'>
+                                        <div class="handle text-bold">sanni_emmanuel</div>
+                                        <div class="under-handle">{{ this.post.location }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 image-container">
+                            <img @dblclick="likePost" :src="`http://greystagram.greysoft.com.ng/storage/${this.post.photo}`" class = "post-image dialog-image" />
+                        </div>
+                        <div class="col-md-6 q-pl-md">
+
+                            <div class="dialog-post-details q-mt-lg">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <q-btn round>
+                                            <q-avatar size = "40px">
+                                                <img src = "https://cdn.quasar.dev/img/boy-avatar.png" />
+                                            </q-avatar>
+                                        </q-btn>
+                                    </div>
+                                    <div class="col-11 post details">
+                                        <div class = 'q-ml-lg'>
+                                            <div class="handle text-bold">sanni_emmanuel</div>
+                                            {{this.post.caption}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </q-card-section>
+            </q-card>
+        </q-dialog>
     </div>
 </template>
 
@@ -69,7 +137,7 @@ export default {
         border: 1px solid black
     }
     .post-container{
-        margin: 20px 0;
+        margin: 20px 10%;
         border: 1px solid #ccc;
     }
     .post-header{
@@ -138,7 +206,7 @@ export default {
         height: 100%;
     }
     .dialog-card{
-        height: 80vh;
+        /* height: 90vh; */
         width: 100vw
     }
 
@@ -161,10 +229,9 @@ export default {
         border-bottom: 1px solid #ccc;
         padding-bottom: 15px
     }
-    @media screen and (max-width:984px){
-      .post-container{
-        max-width:fit-content;
-        width:30%;
+    @media screen and (max-width:670px){
+      .sanni{
+        margin-left:1.5rem;
       }
     }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class = "post-container">
+    <div class = "post-container q-ml-xl">
         <!-- Post header -->
         <div class="post-header">
             <div class="row">
@@ -166,6 +166,7 @@ export default {
     .post-container{
         margin: 20px 0;
         border: 1px solid #ccc;
+
     }
     .post-header{
         margin: 20px
