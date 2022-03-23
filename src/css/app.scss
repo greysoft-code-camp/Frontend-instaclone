@@ -10,3 +10,18 @@
 .toolbar-title{
   font-family: 'Grand Hotel', cursive;
 }
+
+.login{
+  @media (min-width: 460px) {
+    border: 2px solid rgb(128, 128, 128,0.2);
+    width: 400px;
+    margin: 15% auto;
+    padding-bottom: 5%;
+  }
+}
+
+.hide_image{
+  @media (max-width: 875px) {
+    display: none;
+  }
+}

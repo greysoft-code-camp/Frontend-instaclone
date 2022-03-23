@@ -20,7 +20,7 @@
         </div>
         <!-- Post Image -->
         <div class="post-image">
-            <img :src="this.post.picture.large" class = "post-image" />
+            <img :src="this.post.photo" class = "post-image" />
         </div>
         <!-- Post Footer -->
         <div class="post-footer">

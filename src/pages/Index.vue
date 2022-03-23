@@ -11,7 +11,7 @@
             :post="post"
           />
         </div> -->
-        <div class = "q-mt-lg" :key="post.login.uuid" v-for="post in posts">
+        <div class = "q-mt-lg" :key="post.id" v-for="post in posts">
           <PostLive
             :post="post"
           />
@@ -36,7 +36,7 @@ import PostLive from '../components/PostLive';
 import Sidebar from '../components/Sidebar'
 import SidebarLive from '../components/SidebarLive'
 import Tooltip from 'src/components/Tooltip.vue';
-// import axios from 'axios';
+import axios from 'axios';
 
 export default defineComponent({
   name: 'PageIndex',
@@ -57,9 +57,10 @@ export default defineComponent({
 },
   methods: {
     fetchImages(){
-      axiosPreloaded('/', true)
-      .then(res => {
-        console.log(res);
+      axios.get('https://greystagram.greysoft.com.ng/public/api')
+      .then(({data})=> {
+        this.posts = data;
+        console.log(data);
       })
       .catch(err => {
         console.log(err);
@@ -91,7 +92,7 @@ export default defineComponent({
 
     this.fetchStories();
 
-    this.fetchPosts();
+    // this.fetchPosts();
   }
 })
 </script>
@@ -102,4 +103,4 @@ export default defineComponent({
 
 
 http://192.168.130.83:8080/storage/o6tXq.png
- *// 
+ *//

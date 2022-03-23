@@ -23,7 +23,7 @@
           </q-input>
         </div>
         <div class="row justify-center q-mt-lg">
-          <q-btn 
+          <q-btn
             color="primary"
             label="Post Image" rounded unelevated
             @click="submitImage"
@@ -70,8 +70,8 @@ export default {
       let context  = canvas.getContext('2d')
       context.drawImage(video, 0, 0, canvas.width, canvas.height)
       this.imageCaptured = true
-      this.post.photo = canvas.toDataURL();
-      // this.post.photo = this.dataURItoBlob(canvas.toDataURL());
+      // this.post.photo = canvas.toDataURL();
+      this.post.photo = this.dataURItoBlob(canvas.toDataURL());
       this.disableCamera();
     },
     captureImageFallback(file){
@@ -85,6 +85,7 @@ export default {
            context.drawImage(img, 0, 0)
          }
          img.src = event.target.result
+         console.log(event.target.result)
        }
        render.readAsDataURL (e.target.files[0])
     },
@@ -93,7 +94,7 @@ export default {
         track.stop();
       })
     },
-    dataURItoBlob(dataURI){  
+    dataURItoBlob(dataURI){
       var byteString= atob(dataURI.split(',')[1]);
 
       var mineString = dataURI.split(',')[0].split(':')[1].split(';')[0]
@@ -135,16 +136,19 @@ export default {
       console.log(this.post);
       if(this.post.photo){
         let formData = new FormData();
-        
+
         formData.append('caption', this.post.caption);
-        formData.append('location', this.post.location);
         formData.append('photo', this.post.photo);
-        // formData.append('date', this.post.date);
-        // console.log(formData.get('photo'));
+        formData.append('location', this.post.location);
+
         axios({
             method: 'POST',
-            url: 'http://192.168.130.83:8080/api/post',
-            data: formData
+            url: 'https://greystagram.greysoft.com.ng/api/posts',
+            data: formData,
+            headers: {
+              // 'Content-Length': this.post.photo.length,
+              'Content-Type': 'multipart/form-data'
+            }
         })
         .then(response => {
           console.log(response);
@@ -159,7 +163,7 @@ export default {
     this.initCamera()
   }
 
-  }
+}
 </script>
 
 <style scoped>
