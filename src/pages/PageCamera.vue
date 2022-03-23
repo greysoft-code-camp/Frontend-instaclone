@@ -59,6 +59,7 @@ export default {
       }).then(stream => {
         this.$refs.video.srcObject = stream
       }).catch(error => {
+        // alert(error)
         this.hasCameraSupport = false
       })
     },
