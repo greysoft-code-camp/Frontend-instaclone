@@ -75,19 +75,24 @@ export default {
       this.disableCamera();
     },
     captureImageFallback(file){
-       this.post.photo = file
-       var reader =new FileReader()
-       reader.onload = event => {
-         var img = new Image()
-         img.onload = () =>{
-           canvas.width = img.width
-           canvas.height = img.height
-           context.drawImage(img, 0, 0)
-         }
-         img.src = event.target.result
-         console.log(event.target.result)
-       }
-       render.readAsDataURL (e.target.files[0])
+      file = file.target.files[0];
+        // console.log(file)
+      let canvas = this.$refs.canvas;
+      let context= canvas.getContext('2d');
+      var reader =new FileReader()
+      reader.onload = event => {
+        var img = new Image()
+        img.onload = () =>{
+          canvas.width = img.width;
+          canvas.height = img.height;
+          context.drawImage(img, 0, 0);
+          this.imageCaptured = true;
+        }
+        img.src = event.target.result
+        // console.log(event.target.result)
+        this.post.photo = event.target.result;
+      }
+      reader.readAsDataURL(file)
     },
     disableCamera(){
       this.$refs.video.srcObject.getVideoTracks().forEach(track => {
@@ -169,7 +174,6 @@ export default {
           message: "Finish filling the form before submitting.",
           color: "red"
         })
-        this.$q.loading.hide()
       }
     }
   },
